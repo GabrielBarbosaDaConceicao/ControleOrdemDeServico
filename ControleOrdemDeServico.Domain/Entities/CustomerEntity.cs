@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OsService.Domain.Entities
+﻿namespace OsService.Domain.Entities
 {
     public class CustomerEntity
     {
@@ -12,6 +8,5 @@ namespace OsService.Domain.Entities
         public string? Email { get; init; }
         public string? Document { get; init; }
         public DateTime CreatedAt { get; init; }
-
     }
 }

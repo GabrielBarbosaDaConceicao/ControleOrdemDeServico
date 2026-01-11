@@ -1,7 +1,4 @@
 ﻿using OsService.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OsService.Domain.Entities;
 
@@ -16,5 +13,4 @@ public sealed class ServiceOrderEntity
     public decimal? Price { get; init; }
     public string? Coin { get; init; } = "BRL";//"USD", "EUR", "BRL", etc.
     public DateTime? UpdatedPriceAt { get; init; }
-
 }
