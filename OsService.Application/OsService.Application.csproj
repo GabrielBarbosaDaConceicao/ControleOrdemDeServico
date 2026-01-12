@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ControleOrdemDeServico.Domain\OsService.Domain.csproj" />
+    <ProjectReference Include="..\ControleOrdemDeServico.Infrastructure\OsService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

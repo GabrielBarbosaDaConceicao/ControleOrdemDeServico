@@ -1,13 +1,14 @@
 ﻿using OsService.Domain.Entities;
+using OsService.Application.Commands.V1.CreateCustomer;
 using OsService.Infrastructure.Repository;
 using MediatR;
 
-namespace OsService.Services.V1.CreateCustomer;
+namespace OsService.Application.Commands.V1.Customer;
 
-public sealed class CreateCustomerHandler(ICustomerRepository repo)
+public sealed class CreateCustomerHandler(ICustomerRepository customerRepository)
     : IRequestHandler<CreateCustomerCommand, Guid>
 {
-    public async Task<Guid> Handle(CreateCustomerCommand request, CancellationToken ct)
+    public async Task<Guid> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.Name))
             throw new ArgumentException("Name is required.");
@@ -22,7 +23,7 @@ public sealed class CreateCustomerHandler(ICustomerRepository repo)
             CreatedAt = DateTime.UtcNow
         };
 
-        await repo.InsertAsync(customer, ct);
+        await customerRepository.InsertAsync(customer, cancellationToken);
         return customer.Id;
     }
 }

@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(OsService.Services.V1.CreateCustomer.CreateCustomerCommand).Assembly));
+    cfg.RegisterServicesFromAssembly(typeof(OsService.Application.Commands.V1.CreateCustomer.CreateCustomerCommand).Assembly));
 
 builder.Services.AddSingleton<IDefaultSqlConnectionFactory>(_ =>
     new SqlConnectionFactory(builder.Configuration.GetConnectionString("DefaultConnection")!));
