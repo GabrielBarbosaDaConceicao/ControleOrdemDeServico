@@ -15,8 +15,4 @@
     <ProjectReference Include="..\ControleOrdemDeServico.Infrastructure\OsService.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Handers\ServiceOrder\" />
-  </ItemGroup>
-
 </Project>

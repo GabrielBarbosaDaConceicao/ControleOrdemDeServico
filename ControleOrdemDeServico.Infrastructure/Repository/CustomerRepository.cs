@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using OsService.Domain.Entities;
+using OsService.Domain.Repository.Interfaces.Customer;
 using OsService.Infrastructure.Databases;
 namespace OsService.Infrastructure.Repository;
 

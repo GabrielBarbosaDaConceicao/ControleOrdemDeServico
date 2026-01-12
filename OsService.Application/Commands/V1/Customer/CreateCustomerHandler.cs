@@ -1,7 +1,7 @@
 ﻿using OsService.Domain.Entities;
 using OsService.Application.Commands.V1.CreateCustomer;
-using OsService.Infrastructure.Repository;
 using MediatR;
+using OsService.Domain.Repository.Interfaces.Customer;
 
 namespace OsService.Application.Commands.V1.Customer;
 

@@ -1,4 +1,6 @@
+using OsService.Domain.Repository.Interfaces.Customer;
 using OsService.Infrastructure.Databases;
+using OsService.Domain.Repository.Interfaces.ServiceOrder;
 using OsService.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);

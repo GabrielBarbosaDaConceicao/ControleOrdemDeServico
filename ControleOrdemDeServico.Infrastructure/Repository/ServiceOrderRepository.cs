@@ -2,21 +2,20 @@
 using OsService.Domain.Enums;
 using OsService.Infrastructure.Databases;
 using Dapper;
+using OsService.Domain.Repository.Interfaces.ServiceOrder;
 
 namespace OsService.Infrastructure.Repository;
 
 public sealed class ServiceOrderRepository(IDefaultSqlConnectionFactory factory) : IServiceOrderRepository
 {
-
-
-    public async Task<ServiceOrderEntity?> GetByIdAsync(Guid id, CancellationToken ct)
+    public async Task<ServiceOrderEntity?> GetServiceOrderByIdAsync(Guid id, CancellationToken ct)
     {
         const string sql = @"
-SELECT Id, Number, CustomerId, Description,
-       Status = CAST(Status AS INT),
-       OpenedAt
-FROM dbo.ServiceOrders
-WHERE Id = @Id;";
+                            SELECT Id, Number, CustomerId, Description,
+                                   Status = CAST(Status AS INT),
+                                   OpenedAt
+                            FROM dbo.ServiceOrders
+                            WHERE Id = @Id;";
 
         using var conn = factory.Create();
         var raw = await conn.QuerySingleOrDefaultAsync<dynamic>(
@@ -33,5 +32,18 @@ WHERE Id = @Id;";
             Status = (ServiceOrderStatus)(int)raw.Status,
             OpenedAt = raw.OpenedAt
         };
+    }
+
+    public Task<IEnumerable<ServiceOrderEntity>> GetServiceOrdersByCustomerId(Guid customerId, CancellationToken ct)
+    {
+        const string sql = @"
+                            SELECT Id, Number, CustomerId, Description,
+                                   Status = CAST(Status AS INT),
+                                   OpenedAt
+                            FROM dbo.ServiceOrders
+                            WHERE CustomerId = @CustomerId;";
+        using var conn = factory.Create();
+        return conn.QueryAsync<ServiceOrderEntity>(
+            new CommandDefinition(sql, new { CustomerId = customerId }, cancellationToken: ct));
     }
 }

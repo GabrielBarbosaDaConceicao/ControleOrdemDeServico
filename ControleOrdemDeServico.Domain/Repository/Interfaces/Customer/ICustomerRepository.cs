@@ -1,6 +1,6 @@
 ﻿using OsService.Domain.Entities;
 
-namespace OsService.Infrastructure.Repository;
+namespace OsService.Domain.Repository.Interfaces.Customer;
 
 public interface ICustomerRepository
 {
