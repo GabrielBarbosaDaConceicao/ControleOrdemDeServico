@@ -10,7 +10,7 @@
     <Project Path="ControleOrdemDeServico.AppHost/OsService.AppHost.csproj" />
     <Project Path="ControleOrdemDeServico.ServiceDefaults/OsService.ServiceDefaults.csproj" />
   </Folder>
-  <Folder Name="/src/Apis/">
+  <Folder Name="/src/Api/">
     <Project Path="ControleOrdemDeServico.ApiService/OsService.ApiService.csproj" />
   </Folder>
   <Folder Name="/src/Application/">

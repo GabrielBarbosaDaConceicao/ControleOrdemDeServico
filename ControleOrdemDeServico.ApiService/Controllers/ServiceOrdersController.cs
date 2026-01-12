@@ -21,7 +21,7 @@ public sealed class ServiceOrdersController(IMediator mediator) : ControllerBase
         return Ok(new { id });
     }
 
-    [HttpPatch("{id:guid}/{status:string}")]
+    [HttpPatch("{id:guid}/{status}")]
     public async Task<IActionResult> GetByServiceOrderStatus(Guid id, string? status, CancellationToken cancellationToken)
     {
         return Ok(new { id });

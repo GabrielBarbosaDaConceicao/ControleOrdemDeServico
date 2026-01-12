@@ -1,9 +1,7 @@
 ﻿using Dapper;
 using OsService.Domain.Entities;
 using OsService.Infrastructure.Databases;
-
 namespace OsService.Infrastructure.Repository;
-
 
 public sealed class CustomerRepository(IDefaultSqlConnectionFactory factory) : ICustomerRepository
 {
@@ -49,6 +47,19 @@ public sealed class CustomerRepository(IDefaultSqlConnectionFactory factory) : I
         using var conn = factory.Create();
         return await conn.QuerySingleOrDefaultAsync<CustomerEntity>(
             new CommandDefinition(sql, new { Id = id }, cancellationToken: ct));
+    }
+
+    public async Task<CustomerEntity?> GetByPhoneOrDocumentAsync(string? phone, string? document, CancellationToken ct)
+    {
+        const string sql = @"
+                            SELECT Id, Name, Phone, Email, Document, CreatedAt
+                            FROM dbo.Customers
+                            WHERE (@Phone IS NOT NULL AND Phone = @Phone)
+                               OR (@Document IS NOT NULL AND Document = @Document);";
+
+        using var conn = factory.Create();
+        return await conn.QuerySingleOrDefaultAsync<CustomerEntity>(
+            new CommandDefinition(sql, new { Phone = phone, Document = document }, cancellationToken: ct));
     }
 
     public async Task<bool> ExistsAsync(Guid id, CancellationToken ct)
