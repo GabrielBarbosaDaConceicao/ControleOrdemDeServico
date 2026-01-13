@@ -1,5 +1,5 @@
 using MediatR;
-using OsService.Application.DTOs.Customer;
+using OsService.Application.DTOs;
 using OsService.Application.Queries.V1.Customer;
 using OsService.Domain.Repository.Interfaces.Customer;
 

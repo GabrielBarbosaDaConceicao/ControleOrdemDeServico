@@ -1,5 +1,5 @@
 using MediatR;
-using OsService.Application.DTOs.Customer;
+using OsService.Application.DTOs;
 using OsService.Application.Queries.V1.Customer;
 using OsService.Domain.Repository.Interfaces.Customer;
 
@@ -9,10 +9,8 @@ public sealed class GetCustomerByIdHandler(ICustomerRepository customers) : IReq
 {
     public async Task<CustomerDto?> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
-        if (request.Id == Guid.Empty)
-            throw new ArgumentException("Id is required.", nameof(request));
-
         var entity = await customers.GetByIdAsync(request.Id, cancellationToken);
+
         if (entity is null)
             return null;
 

@@ -2,11 +2,13 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
-namespace OsService.Application.DTOs.Customer
+namespace OsService.Application.DTOs
 {
     public sealed class ServiceOrderDto
     {
+        [JsonIgnore]
         [Key]
         public Guid Id { get; init; }
 
@@ -31,9 +33,11 @@ namespace OsService.Application.DTOs.Customer
         [DisplayName("Price")]
         public decimal? Price { get; init; }
 
+        [JsonIgnore]
         [DisplayName("Coin")]
         public string? Coin { get; init; } = "BRL";//"USD", "EUR", "BRL", etc.
 
+        [JsonIgnore]
         [DisplayName("Updated Date")]
         public DateTime? UpdatedPriceAt { get; init; }
     }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OsService.Application.Commands.V1.CreateCustomer;
+using OsService.Application.DTOs;
 using OsService.Application.Queries.V1.Customer;
 
 namespace OsService.ApiService.Controllers;
@@ -10,9 +11,14 @@ namespace OsService.ApiService.Controllers;
 public sealed class CustomersController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateCustomerCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] CustomerDto customerDto, CancellationToken cancellationToken)
     {
-        var id = await mediator.Send(command, cancellationToken);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
+        var id = await mediator.Send(new CreateCustomerCommand(customerDto.Name, customerDto.Phone, customerDto.Email, customerDto.Document), cancellationToken);
         return CreatedAtAction(nameof(GetById), new { id }, new { id });
     }
 
