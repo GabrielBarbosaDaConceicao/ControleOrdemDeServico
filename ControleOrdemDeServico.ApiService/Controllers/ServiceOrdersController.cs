@@ -22,4 +22,11 @@ public sealed class ServiceOrdersController(IMediator mediator) : ControllerBase
         var serviceOrder = await mediator.Send(new GetServiceOrderByIdQuery(id), cancellationToken);
         return Ok(serviceOrder);
     }
+
+    [HttpGet("list/{customerId:guid}")]
+    public async Task<IActionResult> ListServiceOrdersByCustomer(Guid customerId, CancellationToken cancellationToken) 
+    {
+        var serviceOrders = await mediator.Send(new GetListServiceOrdersByCustomerQuery(customerId), cancellationToken);
+        return Ok(serviceOrders);
+    }
 }

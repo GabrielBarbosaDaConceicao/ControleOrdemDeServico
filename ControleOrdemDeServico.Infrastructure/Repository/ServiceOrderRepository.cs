@@ -34,16 +34,33 @@ public sealed class ServiceOrderRepository(IDefaultSqlConnectionFactory factory)
         };
     }
 
-    public Task<IEnumerable<ServiceOrderEntity>> GetServiceOrdersByCustomerId(Guid customerId, CancellationToken ct)
+    public async Task<IEnumerable<ServiceOrderEntity>> GetServiceOrdersByCustomerId(Guid customerId, CancellationToken ct)
     {
         const string sql = @"
-                            SELECT Id, Number, CustomerId, Description,
-                                   Status = CAST(Status AS INT),
-                                   OpenedAt
-                            FROM dbo.ServiceOrders
-                            WHERE CustomerId = @CustomerId;";
+                        SELECT Id, Number, CustomerId, Description,
+                               Status = CAST(Status AS INT),
+                               OpenedAt
+                        FROM dbo.ServiceOrders
+                        WHERE CustomerId = @CustomerId;";
+
         using var conn = factory.Create();
-        return conn.QueryAsync<ServiceOrderEntity>(
+        var raws = await conn.QueryAsync<dynamic>(
             new CommandDefinition(sql, new { CustomerId = customerId }, cancellationToken: ct));
+
+        var result = new List<ServiceOrderEntity>();
+        foreach (var raw in raws)
+        {
+            result.Add(new ServiceOrderEntity
+            {
+                Id = raw.Id,
+                Number = raw.Number,
+                CustomerId = raw.CustomerId,
+                Description = raw.Description,
+                Status = (ServiceOrderStatus)(int)raw.Status,
+                OpenedAt = raw.OpenedAt
+            });
+        }
+
+        return result;
     }
 }
